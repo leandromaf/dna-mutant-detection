@@ -1,0 +1,8 @@
+#Ignore virtualenv folders
+bin/
+include/
+lib/
+
+pip-selfcheck.json
+
+.Python
