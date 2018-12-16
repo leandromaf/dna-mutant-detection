@@ -4,7 +4,6 @@ from dotenv import find_dotenv, load_dotenv
 #Import para acceder a mongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-import pandas as pd
 import os
 
 # Experto para manejo de base de datos MongoDB
