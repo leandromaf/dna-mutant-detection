@@ -26,27 +26,17 @@ class DNAMutantDetectionExpert:
 			# lo inicializamos con un 1 para cada columnaumna
 			contadoresElmentosIgualescolumnaumnas.append(1)
 
-		# arreglo para llevar la cuenta de elementos iguales por diagonal principal, cunado fila == columna
-		# tiene  dos elementos, uno para cada direccion
-		# desde la izquieda o hacia la derecha
-		contadorElementosIgualesDiagonalPrincipal = [1,1]
 		
-		# matriz para llevar la cuenta de elementos iguales arriba de la  diagonal principal, cuando la columna > fila
-		# tiene una cantidad de filas igua la la cantidad de columnas de la matriz y dos columnas, una para cada direccion
-		# desde la izquieda o hacia la derecha
-		contadorElementosIgualesDiagonalSuperior = []
-		for i in range(ncolumnas-1):
+		# matriz para llevar la cuenta de elementos iguales en las diagonales 
+		# tiene una cantidad de filas igua la la (cantidad de columnas de la matriz * 2 ) - 1 (cantidad de diagonales posibles
+		# y dos columnas, una para cada direccion posible de la diagonal
+		# desde la izquieda o desde la derecha
+		contadorElementosIgualesDiagonal = []
+		for i in range((2*ncolumnas)-1):
 			# lo inicializamos con una lista de dos 1 para cada direccion
-			contadorElementosIgualesDiagonalSuperior.append([1,1])
+			contadorElementosIgualesDiagonal.append([1,1])
 
-		# matriz para llevar la cuenta de elementos iguales abajo de la  diagonal principal, cuando la  fila > columna
-		# tiene una cantidad de filas igua la la cantidad de columnas de la matriz y dos columnas, una para cada direccion
-		# desde la izquieda o hacia la derecha
-		contadorElementosIgualesDiagonalInferior = []
-		for i in range(ncolumnas-1):
-			# lo inicializamos con una lista de dos 1 para cada direccion
-			contadorElementosIgualesDiagonalInferior.append([1,1])
-
+		
 		# iteramos por fila
 		for fila in range(0, len(dna)):
 			# para cada nueva fila el contador de elementos iguales por fila se reinicia a 1 
@@ -112,76 +102,42 @@ class DNAMutantDetectionExpert:
 					# variable para indicar si se puede o no analizar este caso
 					analizando = False
 					# si estamos trabajando en la direccion diagonal desde arriba a la izquierda
-					# y ademas es posible extraer ese elemento (validacion)
-					if direccionDiagonal == 0 and fila > 0 and columna > 0 :
-						# analizando el elemento anterior arriba a la izquierda
-						elementoPrevio = dna[fila - 1][columna - 1]
-						analizando = True
-					elif direccionDiagonal == 1 and fila > 0 and columna + 1 < ncolumnas :
-						# hacer los mismo para diagonal analizando el elemento anterior arriba a la derecha
-						elementoPrevio = dna[fila - 1][columna + 1]
-						analizando = True
+					if direccionDiagonal == 0:
+						# indicamos el indice a buscar en la matriz contadora de elemntos iguales que para este caso se 
+						# calcula como:
+						indiceMatriz = columna - fila + ncolumnas - 1 
+						if fila > 0 and columna > 0 :
+							# y ademas es posible extraer ese elemento (validacion)	
+							# analizando el elemento anterior arriba a la izquierda
+							elementoPrevio = dna[fila - 1][columna - 1]
+							analizando = True
+					elif direccionDiagonal == 1:
+						# indicamos el indice a buscar en la matriz contadora de elemntos iguales que para este caso se 
+						# calcula como:
+						indiceMatriz = columna + fila
+						if fila > 0 and columna + 1 < ncolumnas :
+							# hacer los mismo para diagonal analizando el elemento anterior arriba a la derecha
+							elementoPrevio = dna[fila - 1][columna + 1]
+							analizando = True
 
 					if analizando and elementoActual == elementoPrevio:
 						# si el actual es igual al previo
 
-						if elementoActual == elementoPrevio == 'T':
-							pdb.set_trace()
-						
-						if fila == columna :
-							# estamos analizando diagonal principal
-							contadorElementosIgualesDiagonalPrincipal[direccionDiagonal] += 1
-							if contadorElementosIgualesDiagonalPrincipal[direccionDiagonal] == cantidadIguales:
-								# cuando llegamos a la cantidad de elementos iguales  sumamos uno a la cantidad 
-								# de secuencias iguales
-								print("Encontramos "+str(contadorElementosIgualesDiagonalPrincipal[direccionDiagonal])+ " elementos iguales en la diagonal principal")
-								# reinicio del contador de elementos iguales de la diagonal principal
-								contadorElementosIgualesDiagonalPrincipal[direccionDiagonal] = 1
-								contadorSecuenciasIguales += 1
-								if contadorSecuenciasIguales >= secuenciasIgualesMinima:
-									# apenas encontramos al menos secuenciasIgualesMinima secuencias iguales devolvemos True
-									# para cortar cuanto antes
-									return True
-						elif columna > fila :
-							# estamos analizando diagonal superior
-							# TODO BUG: aqui no estamos indexando bien, no es una forma univoca la digaonal con esa cuenta
-							contadorElementosIgualesDiagonalSuperior[columna-fila-1][direccionDiagonal] += 1
-							if contadorElementosIgualesDiagonalSuperior[columna-fila-1][direccionDiagonal] == cantidadIguales:
-								# cuando llegamos a la cantidad de elementos iguales  sumamos uno a la cantidad 
-								# de secuencias iguales
-								print("Encontramos "+str(contadorElementosIgualesDiagonalSuperior[columna-fila-1][direccionDiagonal])+ " elementos iguales en una diagonal superior")
-								# reinicio del contador de elementos iguales de la diagonal superior columna - fila
-								contadorElementosIgualesDiagonalSuperior[columna-fila-1][direccionDiagonal]= 1
-								contadorSecuenciasIguales += 1
-								if contadorSecuenciasIguales >= secuenciasIgualesMinima:
-									# apenas encontramos al menos secuenciasIgualesMinima secuencias iguales devolvemos True
-									# para cortar cuanto antes
-									return True
-						elif fila > columna :
-							# estamos analizando diagonal inferior
-							contadorElementosIgualesDiagonalInferior[fila-columna-1][direccionDiagonal] += 1
-							if contadorElementosIgualesDiagonalInferior[fila-columna-1][direccionDiagonal] == cantidadIguales:
-								# cuando llegamos a la cantidad de elementos iguales  sumamos uno a la cantidad 
-								# de secuencias iguales
-								print("Encontramos "+str(contadorElementosIgualesDiagonalInferior[fila-columna-1][direccionDiagonal])+ " elementos iguales en una diagonal inferior")
-								# reinicio del contador de elementos iguales de la diagonal superior columna - fila
-								contadorElementosIgualesDiagonalInferior[fila-columna-1][direccionDiagonal]= 1
-								contadorSecuenciasIguales += 1
-								if contadorSecuenciasIguales >= secuenciasIgualesMinima:
-									# apenas encontramos al menos secuenciasIgualesMinima secuencias iguales devolvemos True
-									# para cortar cuanto antes
-									return True
+						contadorElementosIgualesDiagonal[indiceMatriz][direccionDiagonal] +=1
+
+						if contadorElementosIgualesDiagonal[indiceMatriz][direccionDiagonal] == cantidadIguales:
+							print("Encontramos "+str(contadorElementosIgualesDiagonal[indiceMatriz][direccionDiagonal])+ " elementos iguales en la diagonal")
+							# reinicio del contador de elementos iguales de la diagonal principal
+							contadorElementosIgualesDiagonal[indiceMatriz][direccionDiagonal] = 1
+							contadorSecuenciasIguales += 1
+							if contadorSecuenciasIguales >= secuenciasIgualesMinima:
+								# apenas encontramos al menos secuenciasIgualesMinima secuencias iguales devolvemos True
+								# para cortar cuanto antes
+								return True
+
 					else:
-						if fila == columna :
-							# estamos analizando diagonal principal
-							contadorElementosIgualesDiagonalPrincipal[direccionDiagonal] = 1
-						elif columna > fila :
-							# estamos analizando diagonal superior
-							contadorElementosIgualesDiagonalSuperior[columna-fila-1][direccionDiagonal] = 1
-						elif fila > columna :
-							# estamos analizando diagonal inferior
-							contadorElementosIgualesDiagonalInferior[fila-columna-1][direccionDiagonal] = 1
-				
+						contadorElementosIgualesDiagonal[indiceMatriz][direccionDiagonal] = 1
+						
 
 		# si no se ha salido antes por True, sale False por defecto
 		return False
