@@ -45,11 +45,21 @@ def analizeDna():
 			return jsonify({"dna":dna,"isMutant":isMutant}), 403
 
 # Endpoint GET para obtener las estadisticas
-@app.route('/stats', methods=['GET'])
+@app.route('/stats/', methods=['GET'])
 def getStats():
+	logger.info("Entrando a get stats")
 	stats = controller.getStats()
 	return jsonify(stats),200
 	
+@app.route('/clearData/', methods=['GET'])
+def clearDataBase():
+	controller.clearDataBase()
+	logger.info("Entrando a clear data")
+	stats = controller.getStats()
+	return jsonify(stats),200
+
+
+
 @app.route('/')
 def index():
 	return "Bienvenido al detector de Mutantes!"

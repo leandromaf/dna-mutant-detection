@@ -33,3 +33,7 @@ class MutantDetectionAPIController:
 		return {"count_mutant_dna":count_mutant_dna, "count_human_dna":count_human_dna,"ratio":ratio}
 
 
+	def clearDataBase(self):
+		self.dataBaseExpert.clearDataBase()
+
+

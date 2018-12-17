@@ -39,3 +39,7 @@ class MongoDataBaseExpert:
 			count = self.dbMongo.dnas.find({'isMutant':False}).count()
 			return count
 
+	def clearDataBase(self):
+		self.dbMongo.dnas.delete_many({})
+
+
