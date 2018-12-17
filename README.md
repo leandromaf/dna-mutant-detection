@@ -47,16 +47,33 @@ El servicio “/mutant/” puede detectar si un humano es
 mutante enviando la secuencia de ADN mediante un HTTP POST con un Json el cual tenga el
 siguiente formato:
 
-POST → /mutant/
 {
-“dna”:["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
+
+"dna":["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
+
 }
 
-En caso de verificar un mutante, debería devolver un HTTP 200-OK, en caso contrario un
+En caso de verificar un mutante, devuelve un HTTP 200-OK, en caso contrario un
 403-Forbidden
 
+Se puede usar este servicio en el siguiente URL, usando el método POST y pasando el Json correspondiente:
 
-El servicio  “/stats”  devuelve un Json con las estadísticas de las
+http://ec2-18-231-192-215.sa-east-1.compute.amazonaws.com:8080/mutant/
+
+
+El servicio  “/stats/”  devuelve un Json con las estadísticas de las
 verificaciones de ADN, por ejemplo: 
 
 {“count_mutant_dna”: 40, “count_human_dna”: 100: “ratio”: 0.4}
+
+Se puede usar este servicio en el siguiente URL, usando el método GET:
+
+http://ec2-18-231-192-215.sa-east-1.compute.amazonaws.com:8080/stats/
+
+
+De forma accesoria existe un servicio "/clearData" que permite limpiar la base de datos donde se han registrado los resultados de análisis, el cual se puede acceder en el siguiente URL, usando el método GET:
+
+http://ec2-18-231-192-215.sa-east-1.compute.amazonaws.com:8080/clearData/
+
+
+
