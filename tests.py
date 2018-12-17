@@ -31,6 +31,8 @@ if response.status_code == 200:
 	jsonResult = json.loads(response.text)
 	if jsonResult['ratio'] == 0 and jsonResult['count_human_dna'] == 0 and jsonResult['count_mutant_dna'] == 0 :
 		print("Pasó el test\n\n")
+	else:
+		print("NO Pasó el test\n\n")
 
 # una verdadera
 payload = "{\"dna\":[\"TTGCTG\",\"CTGTAC\",\"TTTACG\",\"AAATGG\",\"CCCTTG\",\"TCACTG\"]}"
@@ -49,6 +51,8 @@ print(response.text+str(" status code = ")+str(response.status_code))
 
 if response.status_code == 200:
 	print("Pasó el test\n\n")
+else:
+	print("NO Pasó el test\n\n")
 
 # una falsa
 payload = "{\"dna\":[\"TAGCTG\",\"CTGTAC\",\"TTTACA\",\"AAATGG\",\"CCCTTG\",\"TCACTG\"]}"
@@ -68,6 +72,8 @@ print(response.text+str(" status code = ")+str(response.status_code))
 
 if response.status_code == 403:
 	print("Pasó el test\n\n")
+else:
+	print("NO Pasó el test\n\n")
 
 
 # otra verdadera
@@ -87,6 +93,8 @@ print(response.text+str(" status code = ")+str(response.status_code))
 
 if response.status_code == 200:
 	print("Pasó el test\n\n")
+else:
+	print("NO Pasó el test\n\n")
 
 
 
@@ -107,6 +115,8 @@ print(response.text+str(" status code = ")+str(response.status_code))
 
 if response.status_code == 200:
 	print("Pasó el test\n\n")
+else:
+	print("NO Pasó el test\n\n")
 
 
 
@@ -129,6 +139,8 @@ if response.status_code == 200:
 	jsonResult = json.loads(response.text)
 	if jsonResult['ratio'] == 2.0 and jsonResult['count_human_dna'] == 1 and jsonResult['count_mutant_dna'] == 2 :
 		print("Pasó el test\n\n")
+	else:
+		print("NO Pasó el test\n\n")
 
 
 # una falsa
@@ -149,6 +161,8 @@ print(response.text+str(" status code = ")+str(response.status_code))
 
 if response.status_code == 403:
 	print("Pasó el test\n\n")
+else:
+	print("NO Pasó el test\n\n")
 
 
 
@@ -170,6 +184,8 @@ print(response.text+str(" status code = ")+str(response.status_code))
 
 if response.status_code == 403:
 	print("Pasó el test\n\n")
+else:
+	print("NO Pasó el test\n\n")
 
 
 # una falsa
@@ -190,6 +206,8 @@ print(response.text+str(" status code = ")+str(response.status_code))
 
 if response.status_code == 403:
 	print("Pasó el test\n\n")
+else:
+	print("NO Pasó el test\n\n")
 
 
 
@@ -211,6 +229,8 @@ if response.status_code == 200:
 	jsonResult = json.loads(response.text)
 	if jsonResult['ratio'] == 0.5 and jsonResult['count_human_dna'] == 4 and jsonResult['count_mutant_dna'] == 2 :
 		print("Pasó el test\n\n")
+	else:
+		print("NO Pasó el test\n\n")
 
 
 
@@ -234,3 +254,5 @@ if response.status_code == 403:
 	jsonResult = json.loads(response.text)
 	if jsonResult["message"] == "DNA No valido para analizar" and jsonResult["status"] == "Error":
 		print("Pasó el test\n\n")
+	else:
+		print("NO Pasó el test\n\n")
