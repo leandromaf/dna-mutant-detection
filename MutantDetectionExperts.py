@@ -7,13 +7,7 @@ class DNAMutantDetectionExpert:
 
 	# funcion que debe decir si el arreglo de cadenas pasado en dna corresponde a un mutante
 	def isMutant(self,dna,cantidadIguales = 4,secuenciasIgualesMinima = 2):
-		
-		'''
-		TODO
-		idealmente deberiamos poder transformar el arreglo de cadenas a una matriz numpy para chequear de antemano ante
-		un elemento puntual si efectivamente existen al menos en toda la matriz una cantidad igual a la considerada
-		para ser mutante
-		'''	
+			
 		# Variable para contar cuantas secuencias iguales llevamos encontradas
 		contadorSecuenciasIguales = 0
 		
