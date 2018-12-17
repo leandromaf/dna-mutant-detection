@@ -29,6 +29,16 @@ class MongoDataBaseExpert:
 			d = {'dnaString':dnaString,'dna':dna,'isMutant':isMutant}
 			self.dbMongo.dnas.insert_one(d)
 
+	# funcion que devuelve el valor de isMutant de un dna si es que esta guardado en la base de datos
+	def getDna(self,dna):
+		# generar una cadena de todo el dna para identificacion unica
+		dnaString = ''.join(dna)
+		result = self.dbMongo.dnas.find_one({'dnaString':dnaString})
+		if result is not None :
+			return result['isMutant']
+		else:
+			return None
+
 	# funcion que  devuelve la cantidad de mutantes
 	def getCountMutants(self):
 		count = self.dbMongo.dnas.find({'isMutant':True}).count()

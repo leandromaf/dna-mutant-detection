@@ -38,11 +38,14 @@ def analizeDna():
 	else:
 		dna = request.json['dna']
 		isMutant = controller.isMutant(dna)
-		controller.saveDna(dna,isMutant)
-		if isMutant:
-			return jsonify({"dna":dna,"isMutant":isMutant}), 200
+		if isMutant is not None:
+			# controller.saveDna(dna,isMutant)
+			if isMutant:
+				return jsonify({"dna":dna,"isMutant":isMutant}), 200
+			else:
+				return jsonify({"dna":dna,"isMutant":isMutant}), 403
 		else:
-			return jsonify({"dna":dna,"isMutant":isMutant}), 403
+			return jsonify({'status': 'Error', 'message': 'DNA No valido para analizar'}), 403
 
 # Endpoint GET para obtener las estadisticas
 @app.route('/stats/', methods=['GET'])
